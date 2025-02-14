@@ -24,7 +24,7 @@ class UserService:
 
         user = self.__userRepository.get_user_by_email(email=login_detail.email)
         if Hash.verify_password(plain_password=login_detail.password, hashed_password=user.password):
-            token = AuthH.encode_jwt(user_id=user.id)
+            token = AuthH.encode_jwt(user_id=user.id, role=user.role)
             if token:
                 return UserWithToken(token=token)
             raise HTTPException(status_code=500, detail="request")

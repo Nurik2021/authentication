@@ -11,9 +11,10 @@ JWT_ALGORITHM = config('JWT_ALGORITHM')
 class AuthH(object):
 
     @staticmethod
-    def encode_jwt(user_id: int):
+    def encode_jwt(user_id: int, role:str):
         payload = {
             'user_id': user_id,
+            'role': role,
             'exp': time.time() + 900
         }
 

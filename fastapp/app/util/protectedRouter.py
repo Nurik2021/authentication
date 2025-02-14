@@ -37,6 +37,7 @@ def get_current_user(
                 first_name=user.first_name,
                 last_name=user.last_name,
                 email=user.email,
+                role=user.role,
 
 
             )
@@ -44,7 +45,7 @@ def get_current_user(
             raise error
     raise auth_exception
 
-# def get_admin_user(user: UserOutput = Depends(get_current_user)):
-#     if user.role != "admin":
-#         raise HTTPException(status_code=403, detail="Access denied")
-#     return user
+def get_admin_user(user: UserOutput = Depends(get_current_user)):
+    if user.role != "admin":
+        raise HTTPException(status_code=403, detail="Access denied")
+    return user
