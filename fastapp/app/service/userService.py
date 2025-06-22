@@ -12,7 +12,7 @@ class UserService:
 
     def register(self, user_detail: UserInCreate)->UserOutput:
         if self.__userRepository.user_be_by_email(email=user_detail.email):
-            raise HTTPException(status_code=400, detail="Email already registered")
+            raise HTTPException(status_code=400, detail="Email занят")
 
         hashed_password = Hash.get_password_hash(plain_password=user_detail.password)
         user_detail.password = hashed_password
@@ -20,7 +20,7 @@ class UserService:
 
     def login(self, login_detail: UserInCreate)->UserWithToken:
         if not self.__userRepository.user_be_by_email(email=login_detail.email):
-            raise HTTPException(status_code=404, detail="Email not found")
+            raise HTTPException(status_code=404, detail="Email не зарегистрирован")
 
         user = self.__userRepository.get_user_by_email(email=login_detail.email)
         if Hash.verify_password(plain_password=login_detail.password, hashed_password=user.password):
@@ -28,7 +28,8 @@ class UserService:
             if token:
                 return UserWithToken(token=token)
             raise HTTPException(status_code=500, detail="request")
-        raise HTTPException(status_code=400, detail="User not found")
+
+        raise HTTPException(status_code=400, detail="Неверный логин и пароль")
 
     def get_user_by_id(self, user_id: int):
         user = self.__userRepository.get_user_by_id(user_id=user_id)

@@ -15,7 +15,7 @@ class AuthH(object):
         payload = {
             'user_id': user_id,
             'role': role,
-            'exp': time.time() + 900
+            'exp': time.time() + 3600
         }
 
         token = jwt.encode(payload,  JWT_SECRET, algorithm=JWT_ALGORITHM)

@@ -37,8 +37,13 @@ def get_current_user(
                 first_name=user.first_name,
                 last_name=user.last_name,
                 email=user.email,
+                phone_number= user.phone_number,
                 role=user.role,
-
+                passport= user.passport,
+                date_of_birth=user.date_of_birth,
+                gender= user.gender,
+                is_active=user.is_active,
+                created_at=user.created_at
 
             )
         except Exception as error:
